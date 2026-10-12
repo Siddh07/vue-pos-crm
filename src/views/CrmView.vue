@@ -2,8 +2,7 @@
 </script>
 
 <template>
-  <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">CRM Management</h1>
-    <p class="text-gray-500">Customer relationship management features.</p>
+  <div class="p-6 max-w-sm mx-auto bg-blue-600 text-white rounded-xl shadow-lg text-center font-bold text-xl my-8">
+    Tailwind CSS is Working! 🎉
   </div>
 </template>

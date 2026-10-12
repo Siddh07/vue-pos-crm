@@ -54,7 +54,12 @@ export const usePosStore = defineStore('pos', () => {
 
     function clearCart() {
         cart.value = []
+
     }
+
+
+
+
 
     return {
         cart,
@@ -65,5 +70,6 @@ export const usePosStore = defineStore('pos', () => {
         decrementQuantity,
         removeFromCart,
         clearCart
+
     }
 })
