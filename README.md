@@ -1,5 +1,48 @@
-# Vue 3 + TypeScript + Vite
+# Vue POS & CRM System
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A modern Point of Sale (POS) and Customer Relationship Management (CRM) web application built with **Vue 3**, **TypeScript**, **Vite**, **Pinia**, and **Tailwind CSS**.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Features
+
+- **Dashboard**: Quick metrics overview, recent transactions, and revenue stats.
+- **POS Terminal**: Fast item selection, real-time cart calculation, tax, discount, and seamless checkout.
+- **CRM & Customer Directory**: Customer profile management, transaction history, and loyalty tracking.
+- **State Management**: Centralized reactive state powered by Pinia.
+- **Modern UI**: Styled with Tailwind CSS for a sleek, responsive interface.
+
+## Tech Stack
+
+- **Framework**: Vue 3 (Composition API `<script setup>`)
+- **State Management**: Pinia
+- **Routing**: Vue Router
+- **Styling**: Tailwind CSS
+- **Build Tool**: Vite
+- **Language**: TypeScript
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have [Node.js](https://nodejs.org/) installed (v18+ recommended).
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+### Build
+
+Compile and minify for production:
+
+```bash
+npm run build
+```
