@@ -1,17 +1,31 @@
-<!-- App.vue (Fixed) -->
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { ref } from 'vue'
+
+const isModalOpen = ref(false)
+const showToast = ref(false)
+
+function saveCustomer() {
+
+  isModalOpen.value = false
+  showToast.value = true
+
+  setTimeout(() => {
+    showToast.value = false
+  }, 3000)
+}
 </script>
 
 <template>
-  <!-- 1. Permanent Navigation Bar -->
-  <nav class="flex gap-4 p-4 bg-gray-800 text-white">
-    <RouterLink to="/">POS</RouterLink>
-    <RouterLink to="/crm">CRM</RouterLink>
-  </nav>
+  <button @click="isModalOpen = true">
+    Add Customer
+  </button>
 
-  <!-- 2. Dynamic Window: Vue Router injects PosView or CrmView HERE -->
-  <main class="p-4">
-    <RouterView />
-  </main>
+  <Modal :isOpen="isModalOpen">
+    <form @submit.prevent="saveCustomer">
+      <input placeholder="Customer name" />
+      <button type="submit">Save</button>
+    </form>
+  </Modal>
+
+  <ToastNotification message="Customer saved!" type="success" :isVisible="showToast" />
 </template>

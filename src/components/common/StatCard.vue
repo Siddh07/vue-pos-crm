@@ -18,7 +18,8 @@ withDefaults(
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-between">
+  <div
+    class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-between">
     <div class="flex-1 min-w-0">
       <p class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate mb-1">
         {{ title }}
@@ -27,10 +28,12 @@ withDefaults(
         {{ value }}
       </h3>
       <p v-if="subtitle || trend" class="text-xs mt-2 flex items-center gap-1.5 flex-wrap">
-        <span
-          v-if="trend"
-          :class="trendUp ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-rose-600 dark:text-rose-400 font-semibold'"
-        >
+        <span v-if="trend" :class="[
+          'px-2 py-1 rounded-full text-xs font-semibold',
+          trendUp
+            ? 'bg-emerald-100 text-emerald-700'
+            : 'bg-rose-100 text-rose-700'
+        ]">
           {{ trend }}
         </span>
         <span v-if="subtitle" class="text-gray-500 dark:text-gray-400">
@@ -39,10 +42,8 @@ withDefaults(
       </p>
     </div>
 
-    <div
-      v-if="icon || $slots.icon"
-      :class="[color, 'w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0 ml-4']"
-    >
+    <div v-if="icon || $slots.icon"
+      :class="[color, 'w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm shrink-0 ml-4']">
       <slot name="icon">
         <i v-if="icon" :class="icon" class="text-xl"></i>
       </slot>
