@@ -1,0 +1,30 @@
+@mixin rounded-badge($bg-color, $text-color) {
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-weight: 600;
+    background: $bg-color;
+    color: $text-color;
+}
+
+.success-badge {
+    @include rounded-badge(#dcfce7, #16a34a);
+}
+
+.danger-badge {
+    @include rounded-badge(#fee2e2, #dc2626);
+}
+
+.warning-badge {
+    @include rounded-badge(#fef3c7, #92400e);
+}
+
+@mixin custom-scrollbar {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #94a3b8;
+        border-radius: 10px;
+    }
+}
