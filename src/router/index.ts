@@ -1,9 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import DashboardView from '@/views/DashboardView.vue';
 import PosView from '@/views/PosView.vue';
 import CrmView from '@/views/CrmView.vue';
 
 const routes = [
-    { path: '/', name: 'pos', component: PosView },
+    { path: '/', name: 'dashboard', component: DashboardView },
+    { path: '/dashboard', redirect: '/' },
+    { path: '/pos', name: 'pos', component: PosView },
     { path: '/crm', name: 'crm', component: CrmView }
 ]
 
