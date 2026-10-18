@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import DataTable from '@/components/common/DataTable.vue'
+import CustomerForm from '@/components/CustomerForm.vue'
 
 const search = ref('')
 const status = ref('All')
@@ -82,6 +83,8 @@ const textColumns = [
 <template>
     <section class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-6">
         <h1 class="text-2xl font-bold">Customers</h1>
+
+        <CustomerForm />
 
         <div class="flex flex-col sm:flex-row gap-4">
             <div class="flex-1">
