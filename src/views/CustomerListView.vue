@@ -2,6 +2,8 @@
 import { computed, ref, watch } from 'vue'
 import DataTable from '@/components/common/DataTable.vue'
 import CustomerForm from '@/components/CustomerForm.vue'
+import BaseModal from '@/components/common/BaseModal.vue'
+import type { Customer, CustomerInput } from '@/types/customer'
 
 const search = ref('')
 const status = ref('All')
@@ -12,11 +14,12 @@ const sortDirection = ref<'asc' | 'desc'>('asc')
 const currentPage = ref(1)
 const pageSize = 10
 
-const customers = ref([
+const customers = ref<Customer[]>([
     {
         id: 1,
         name: 'John Doe',
         email: 'john@example.com',
+        phone: '',
         company: 'Acme',
         status: 'Active',
         dealValue: 500
@@ -25,11 +28,40 @@ const customers = ref([
         id: 2,
         name: 'Sarah Smith',
         email: 'sarah@example.com',
+        phone: '',
         company: 'Bright Labs',
         status: 'Pending',
         dealValue: 900
     }
 ])
+
+const isModalOpen = ref(false)
+const selectedCustomer = ref<Customer | null>(null)
+const saveMessage = ref('')
+
+function openCustomerModal(customer: Customer | null = null) {
+    selectedCustomer.value = customer ? { ...customer } : null
+    isModalOpen.value = true
+}
+
+function closeCustomerModal() {
+    isModalOpen.value = false
+    selectedCustomer.value = null
+}
+
+function saveCustomer(input: CustomerInput) {
+    if (selectedCustomer.value) {
+        const index = customers.value.findIndex(customer => customer.id === selectedCustomer.value?.id)
+        if (index === -1) return
+        customers.value[index] = { ...input, id: selectedCustomer.value.id }
+        saveMessage.value = 'Customer updated.'
+    } else {
+        const id = customers.value.reduce((max, customer) => Math.max(max, customer.id), 0) + 1
+        customers.value.push({ ...input, id })
+        saveMessage.value = 'Customer added.'
+    }
+    closeCustomerModal()
+}
 
 const filteredCustomers = computed(() => {
     const query = search.value.trim().toLowerCase()
@@ -82,9 +114,17 @@ const textColumns = [
 
 <template>
     <section class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-6">
-        <h1 class="text-2xl font-bold">Customers</h1>
+        <div class="flex items-center justify-between gap-4">
+            <h1 class="text-2xl font-bold">Customers</h1>
+            <button type="button" @click="openCustomerModal()"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">Add Customer</button>
+        </div>
+        <p role="status" class="text-sm text-green-600 dark:text-green-400">{{ saveMessage }}</p>
 
-        <CustomerForm />
+        <BaseModal v-if="isModalOpen" :title="selectedCustomer ? 'Edit Customer' : 'Add Customer'"
+            @close="closeCustomerModal">
+            <CustomerForm :customer="selectedCustomer" @save="saveCustomer" @cancel="closeCustomerModal" />
+        </BaseModal>
 
         <div class="flex flex-col sm:flex-row gap-4">
             <div class="flex-1">
@@ -119,6 +159,7 @@ const textColumns = [
                             Deal Value <span aria-hidden="true">{{ sortIndicator('dealValue') }}</span>
                         </button>
                     </th>
+                    <th scope="col" class="p-4 text-right">Actions</th>
                 </tr>
             </template>
             <template #body>
@@ -129,9 +170,13 @@ const textColumns = [
                     <td class="p-4">{{ customer.company }}</td>
                     <td class="p-4">{{ customer.status }}</td>
                     <td class="p-4 text-right tabular-nums">{{ customer.dealValue.toLocaleString() }}</td>
+                    <td class="p-4 text-right">
+                        <button type="button" @click="openCustomerModal(customer)" :aria-label="`Edit ${customer.name}`"
+                            class="rounded-lg px-3 py-2 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-gray-700">Edit</button>
+                    </td>
                 </tr>
                 <tr v-if="filteredCustomers.length === 0">
-                    <td colspan="5" class="p-8 text-center text-gray-500 dark:text-gray-400">
+                    <td colspan="6" class="p-8 text-center text-gray-500 dark:text-gray-400">
                         No matching customers.
                     </td>
                 </tr>
