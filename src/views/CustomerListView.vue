@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import { RouterLink } from 'vue-router'
 import DataTable from '@/components/common/DataTable.vue'
 import CustomerForm from '@/components/CustomerForm.vue'
 import BaseModal from '@/components/common/BaseModal.vue'
@@ -165,7 +166,12 @@ const textColumns = [
             <template #body>
                 <tr v-for="customer in paginatedCustomers" :key="customer.id"
                     class="hover:bg-gray-50 dark:hover:bg-gray-700/40">
-                    <td class="p-4 font-medium">{{ customer.name }}</td>
+                    <td class="p-4 font-medium">
+                        <RouterLink :to="{ name: 'customer-detail', params: { id: customer.id } }"
+                            class="text-blue-600 hover:underline dark:text-blue-400">
+                            {{ customer.name }}
+                        </RouterLink>
+                    </td>
                     <td class="p-4">{{ customer.email }}</td>
                     <td class="p-4">{{ customer.company }}</td>
                     <td class="p-4">{{ customer.status }}</td>
