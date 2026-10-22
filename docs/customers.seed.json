@@ -1,0 +1,26 @@
+[
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "",
+    "company": "Acme",
+    "status": "Active",
+    "dealValue": 500
+  },
+  {
+    "name": "Sarah Smith",
+    "email": "sarah@example.com",
+    "phone": "",
+    "company": "Bright Labs",
+    "status": "Pending",
+    "dealValue": 900
+  },
+  {
+    "name": "Alex Morgan",
+    "email": "alex@example.com",
+    "phone": "",
+    "company": "Demo Studio",
+    "status": "Closed",
+    "dealValue": 1200
+  }
+]
