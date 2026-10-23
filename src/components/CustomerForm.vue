@@ -125,16 +125,21 @@ async function submitForm() {
 
         <input
           id="customer-phone"
-          v-model="form.phone"
+          v-model.trim="form.phone"
           @blur="v$.phone.$touch()"
           type="tel"
+          inputmode="numeric"
           autocomplete="tel"
           required
           :aria-invalid="v$.phone.$error"
-          aria-describedby="phone-errors"
+          aria-describedby="phone-hint phone-errors"
           :class="{ 'border-red-500': v$.phone.$error }"
           class="w-full rounded-lg border bg-white dark:bg-gray-800 p-3"
         />
+
+        <p id="phone-hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Enter 10 digits without spaces or a country code.
+        </p>
 
         <div id="phone-errors" aria-live="polite">
           <p
