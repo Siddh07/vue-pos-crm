@@ -52,3 +52,13 @@ Compile and minify for production:
 ```bash
 npm run build
 ```
+
+### Preview
+
+After building, preview the production app locally:
+
+```bash
+npm run preview
+```
+
+Open the local URL printed in the terminal to view the app.
