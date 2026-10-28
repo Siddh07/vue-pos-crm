@@ -2,10 +2,16 @@
 import { reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, minValue } from "@vuelidate/validators";
-import type { CustomerInput } from '@/types/customer';
+import type { Customer, CustomerInput } from '@/types/customer';
+import BaseModal from '@/components/common/BaseModal.vue';
 
-const props = defineProps<{ customer?: CustomerInput | null }>();
-const emit = defineEmits<{ save: [customer: CustomerInput]; cancel: [] }>();
+const props = defineProps<{ customer?: CustomerInput | Customer | null }>();
+const emit = defineEmits<{
+  save: [customer: CustomerInput];
+  submit: [customer: CustomerInput];
+  cancel: [];
+  close: [];
+}>();
 
 const form = reactive<CustomerInput>({
   name: "",
@@ -46,11 +52,25 @@ async function submitForm() {
 
   if (!isValid) return;
 
-  emit('save', { ...form, name: form.name.trim(), email: form.email.trim(), company: form.company.trim() });
+  const payload: CustomerInput = {
+    ...form,
+    name: form.name.trim(),
+    email: form.email.trim(),
+    company: form.company.trim(),
+  };
+
+  emit('save', payload);
+  emit('submit', payload);
+}
+
+function handleCancel() {
+  emit('cancel');
+  emit('close');
 }
 </script>
 
 <template>
+  <BaseModal :title="customer ? 'Edit Customer' : 'Add Customer'" @close="handleCancel">
     <form
       @submit.prevent="submitForm"
       novalidate
@@ -180,16 +200,17 @@ async function submitForm() {
       </div>
 
       <div class="flex justify-end gap-3 pt-2">
-      <button type="button" @click="emit('cancel')"
-        class="rounded-lg border border-gray-300 px-4 py-2 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-      >
-        {{ customer ? 'Save changes' : 'Add customer' }}
-      </button>
+        <button type="button" @click="handleCancel"
+          class="rounded-lg border border-gray-300 px-4 py-2 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        >
+          {{ customer ? 'Save changes' : 'Add customer' }}
+        </button>
       </div>
     </form>
+  </BaseModal>
 </template>
