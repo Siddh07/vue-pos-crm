@@ -24,7 +24,7 @@ export const useCustomerStore = defineStore('customer', () => {
         loading.value = true
         error.value = null
         try {
-            customers.value = await customerService.getAll()
+            const data = await customerService.getAll(); customers.value = Array.isArray(data) ? data : []
         } catch (err: unknown) {
             error.value = err instanceof Error ? err.message : 'Failed to fetch customers'
             console.error('fetchCustomers error:', err)
