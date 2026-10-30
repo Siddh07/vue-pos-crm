@@ -24,8 +24,7 @@ A modern Point of Sale (POS) and Customer Relationship Management (CRM) web appl
 ### Mock API backend
 
 See [MockAPI setup](docs/mockapi-setup.md) for the `/customers` resource fields
-and sample records. The customer directory currently uses in-memory data;
-provisioning MockAPI does not automatically connect it to the app.
+and sample records. Configure `VITE_API_URL` in `.env.local` to connect the frontend to your MockAPI endpoint.
 
 ### Prerequisites
 
